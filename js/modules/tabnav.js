@@ -5,6 +5,7 @@ export default class TabNav {
     this.activeClass = "ativo";
   }
 
+  //ATIVA A TAB DE ACORDO COM O ÍNDICE DA MESMA
   activeTab(index) {
     this.tabContent.forEach((section) => {
       section.classList.remove(this.activeClass);
