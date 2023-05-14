@@ -1,28 +1,7 @@
 import AnimaNumeros from "./anima-numeros.js";
 
-export default function initFetchAnimais() {
-  async function fetchAnimais(url) {
-    try {
-      const animaisResponse = await fetch(url);
-      const animaisJSON = await animaisResponse.json();
-      const numerosGrid = document.querySelector(".numeros-grid");
-
-      animaisJSON.forEach((animal) => {
-        const divAnimal = createAnimal(animal);
-        numerosGrid.appendChild(divAnimal);
-      });
-
-      const animaNumeros = new AnimaNumeros(
-        "[data-numero]",
-        ".numeros",
-        "ativo"
-      );
-      animaNumeros.init();
-    } catch (erro) {
-      console.log(erro);
-    }
-  }
-
+export default function fetchAnimais(url, target) {
+  //CRIA A DIV CONTENDO INFORMAÇOES COM O TOTAL DE ANIMAIS
   function createAnimal(animal) {
     const div = document.createElement("div");
     div.classList.add("numero-animal");
@@ -30,5 +9,33 @@ export default function initFetchAnimais() {
     return div;
   }
 
-  fetchAnimais("./animaisapi.json");
+  //PREENCHE CADA ANIMAL NO DOM
+  const numerosGrid = document.querySelector(target);
+  function preencherAnimais(animal) {
+    const divAnimal = createAnimal(animal);
+    numerosGrid.appendChild(divAnimal);
+  }
+
+  //ANIMA OS NÚMEROS DE CADA ANIMAL
+  function animaAnimaisNumeros() {
+    const animaNumeros = new AnimaNumeros("[data-numero]", ".numeros", "ativo");
+    animaNumeros.init();
+  }
+
+  //PUXA OS ANIMAIS ATRAVÉS DE UM ARQUIVO JASON E CRIA CADA ANIMAL UTILIZANDO createAnimal
+  async function criarAnimais() {
+    try {
+      //FETCH, ESPERA A RESPOSTA E TRANSFORMA A RESPOSTA EM JSON
+      const animaisResponse = await fetch(url);
+      const animaisJSON = await animaisResponse.json();
+
+      //APÓS A TRANSFORMACAO DE JSON, ATIVA AS FUNÇÕES PARA PREENCHER E ANIMAR OS NÚMEROS
+      animaisJSON.forEach((animal) => preencherAnimais(animal));
+      animaAnimaisNumeros();
+    } catch (erro) {
+      console.log(erro);
+    }
+  }
+
+  return criarAnimais();
 }
