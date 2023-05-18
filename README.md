@@ -1,5 +1,6 @@
 # animais-marinhos
-Projeto final do curso de JavaScript completo
+Projeto final do curso de JavaScript completo.
+https://loucarnevali.github.io/animais-marinhos/
 
 <div align="left">
   <img alt="Screenshot do projeto" src= "/screenshot/prtsc-animais-marinhos.png"  width="400px">
